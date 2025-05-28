@@ -23,7 +23,7 @@ func _ready():
 
 	var planets_configs = [
 		{
-			"mass": 30.0, "orbital_radius": 250.0, "initial_angle_degrees": 0,
+			"mass": 30.0, "orbital_radius": 400.0, "initial_angle_degrees": 0, # Increased planet's orbital radius
 			"moons": [
 				{ "mass": 1.0, "orbital_radius": 25.0, "initial_angle_degrees": 90, "clockwise": false }
 			]
