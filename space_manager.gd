@@ -25,7 +25,7 @@ func _ready():
 		{
 			"mass": 30.0, "orbital_radius": 250.0, "initial_angle_degrees": 0,
 			"moons": [
-				{ "mass": 1.0, "orbital_radius": 50.0, "initial_angle_degrees": 90, "clockwise": false }
+				{ "mass": 1.0, "orbital_radius": 25.0, "initial_angle_degrees": 90, "clockwise": false }
 			]
 		}
 		# Removed other planets and moons for stability testing
