@@ -23,18 +23,10 @@ func _ready():
 
 	var planets_configs = [
 		{
-			"mass": 30.0, "orbital_radius": 250.0, "initial_angle_degrees": 0,
-			"moons": [
-				{ "mass": 1.0, "orbital_radius": 40.0, "initial_angle_degrees": 90, "clockwise": true },
-				{ "mass": 0.5, "orbital_radius": 60.0, "initial_angle_degrees": 270 }
-			]
-		},
-		{
-			"mass": 20.0, "orbital_radius": 400.0, "initial_angle_degrees": 180, "clockwise": false
-		},
-		{
-			"mass": 50.0, "orbital_radius": 550.0 # Will use random angle and counter-clockwise orbit
+			"mass": 30.0, "orbital_radius": 250.0, "initial_angle_degrees": 0
+			# No moons for this simplified setup
 		}
+		# Removed other planets and moons for stability testing
 	]
 
 	var solar_system_data = OrbitalSystemGenerator.generate_star_system_data(G, star_config, planets_configs)
