@@ -126,7 +126,7 @@ func _spawn_body(body_data: Dictionary):
 
 	# Add to the scene tree (as a child of SpaceManager's parent, e.g., Main)
 	if get_parent():
-		get_parent().add_child(new_body)
+		get_parent().call_deferred("add_child", new_body)
 	else:
 		printerr("SpaceManager has no parent, cannot add spawned body to scene tree.")
 		return # Cannot proceed without a parent
