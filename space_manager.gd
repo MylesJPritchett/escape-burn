@@ -119,7 +119,7 @@ func _spawn_body(body_data: Dictionary):
 		# you'll need to add 'var velocity: Vector2 = Vector2.ZERO' to it.
 		printerr("Body node does not have a 'velocity' property: ", new_body.name)
 		# As a fallback, you could try setting it anyway, but it's better to ensure it exists.
-		# new_body.set("velocity", body_data.velocity) # Less safe
+		#	new_body.set("velocity", body_data.velocity) # Less safe
 
 	new_body.position = body_data.position
 
