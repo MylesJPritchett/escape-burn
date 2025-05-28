@@ -4,6 +4,16 @@ extends Node2D
 var bodies = []
 @export var G = 9.81
 
+func _ready():
+	# Populate the bodies array
+	# We assume bodies are children of this node's parent and have a 'mass' property
+	if get_parent():
+		for child in get_parent().get_children():
+			if child.has_meta("mass") or child.has_method("get_mass") or "mass" in child: # Check if it's a body
+				if child != self: # Don't add self if SpaceManager somehow had a mass property
+					bodies.append(child)
+	print("Bodies in simulation: ", bodies.size())
+
 func _physics_process(delta):
 	apply_gravity(delta)
 
