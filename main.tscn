@@ -28,4 +28,4 @@ position = Vector2(271, 559)
 
 [node name="SpaceManager" type="Node2D" parent="."]
 script = ExtResource("2_h2yge")
-G = 100.0
+G = 1000000.0
