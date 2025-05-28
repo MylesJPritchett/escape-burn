@@ -5,6 +5,11 @@
 [node name="Main" type="Node2D"]
 
 [node name="Player" type="Node2D" parent="."]
+position = Vector2(571, 324)
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+current = true
+zoom = Vector2(0.3, 0.3)
 
 [node name="SpaceManager" type="Node2D" parent="."]
 position = Vector2(571, 324)

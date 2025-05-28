@@ -17,7 +17,7 @@ func _ready():
 		"mass": 1000.0,
 		# Position the star at the center of where SpaceManager is (usually Main's origin if SpaceManager is at 0,0)
 		# Or, if you want it screen-centered and SpaceManager is a child of Main (at 0,0):
-		"position": get_viewport_rect().size / 2.0
+		"position": Vector2.ZERO # Center the star at SpaceManager's origin
 		# "velocity": Vector2.ZERO # Optional: if the whole system should have an initial drift
 	}
 
