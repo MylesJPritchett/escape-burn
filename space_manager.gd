@@ -99,7 +99,7 @@ func _spawn_body(body_data: Dictionary):
 	# Common setup for all bodies
 	# Ensure the script instance is valid before setting properties if script is set dynamically
 	if not new_body.get_script(): # For star, script is set above
-		 if body_type == "planet" or body_type == "moon": # PlanetScene/MoonScene should have script attached
+		if body_type == "planet" or body_type == "moon": # PlanetScene/MoonScene should have script attached
 			pass # Assume script is already on the scene's root
 	
 	# Set properties. Assumes the script on the body (body.gd or on PlanetScene/MoonScene root)
