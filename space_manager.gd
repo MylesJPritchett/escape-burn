@@ -5,6 +5,7 @@ const BodyScript = preload("res://body.gd")
 const PlanetScene = preload("res://planet.tscn")
 const MoonScene = preload("res://moon.tscn")
 const StarTexture = preload("res://the-sun.webp")
+const OrbitalSystemGenerator = preload("res://orbital_system_generator.gd")
 
 var bodies = []
 @export var G = 100000.0 # Ensure this G is appropriate for your desired scale
