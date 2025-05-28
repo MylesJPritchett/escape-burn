@@ -8,7 +8,7 @@ const StarTexture = preload("res://the-sun.webp")
 const OrbitalSystemGenerator = preload("res://orbital_system_generator.gd")
 
 var bodies = []
-@export var G = 100000.0 # Ensure this G is appropriate for your desired scale
+@export var G = 10000.0 # Reduced G to slow down the simulation
 
 func _ready():
 	randomize() # For random initial angles if not specified
