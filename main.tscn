@@ -1,13 +1,21 @@
-[gd_scene load_steps=3 format=3 uid="uid://b67o8rwlfk0s3"]
+[gd_scene load_steps=6 format=3 uid="uid://b67o8rwlfk0s3"]
 
 [ext_resource type="PackedScene" uid="uid://m2jcv5bl0c4s" path="res://planet.tscn" id="1_0xm2m"]
+[ext_resource type="Script" uid="uid://benbkcg77622x" path="res://body.gd" id="1_h2yge"]
 [ext_resource type="Script" uid="uid://wnoi72sg1k6q" path="res://space_manager.gd" id="2_h2yge"]
+[ext_resource type="Texture2D" uid="uid://dwgtklsyb1pkf" path="res://the-sun.webp" id="2_lquwl"]
+[ext_resource type="PackedScene" uid="uid://dg3dmslnaggqv" path="res://moon.tscn" id="5_7mycd"]
 
 [node name="Main" type="Node2D"]
 
 [node name="Star" type="Node2D" parent="."]
+script = ExtResource("1_h2yge")
+mass = 1000.0
 
 [node name="Sprite2D" type="Sprite2D" parent="Star"]
+position = Vector2(585, 306)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("2_lquwl")
 
 [node name="Planet" parent="." instance=ExtResource("1_0xm2m")]
 position = Vector2(338, 202)
@@ -17,15 +25,14 @@ mass = 30.0
 position = Vector2(880, 504)
 mass = 20.0
 
-[node name="Moon" parent="." instance=ExtResource("1_0xm2m")]
-position = Vector2(1111, 93)
-mass = 2.0
-
-[node name="Moon2" parent="." instance=ExtResource("1_0xm2m")]
-position = Vector2(271, 559)
-
 [node name="Player" type="Node2D" parent="."]
 
 [node name="SpaceManager" type="Node2D" parent="."]
 script = ExtResource("2_h2yge")
-G = 1000000.0
+G = 100000.0
+
+[node name="Moon" parent="." instance=ExtResource("5_7mycd")]
+position = Vector2(921, 477)
+
+[node name="Moon2" parent="." instance=ExtResource("5_7mycd")]
+position = Vector2(262, 184)
