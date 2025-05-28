@@ -38,7 +38,7 @@ static func _generate_moons_data_for_parent(
 		var speed: float = calculate_circular_orbit_speed(G, parent_mass, orbital_radius)
 		var relative_velocity_direction: Vector2
 		if clockwise:
-			relative_velocity_direction = relative_pos.orthogonal().opposite() # Clockwise tangential velocity
+			relative_velocity_direction = -relative_pos.orthogonal() # Clockwise tangential velocity
 		else:
 			relative_velocity_direction = relative_pos.orthogonal() # Counter-clockwise tangential velocity
 		
@@ -82,7 +82,7 @@ static func generate_star_system_data(G: float, star_config: Dictionary, planets
 		var speed: float = calculate_circular_orbit_speed(G, star_data.mass, orbital_radius)
 		var relative_velocity_direction: Vector2
 		if clockwise:
-			relative_velocity_direction = relative_pos.orthogonal().opposite() # Clockwise tangential velocity
+			relative_velocity_direction = -relative_pos.orthogonal() # Clockwise tangential velocity
 		else:
 			relative_velocity_direction = relative_pos.orthogonal() # Counter-clockwise tangential velocity
 		
