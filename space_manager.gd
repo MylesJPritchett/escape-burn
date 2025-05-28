@@ -27,8 +27,16 @@ func _ready():
 			"moons": [
 				{ "mass": 1.0, "orbital_radius": 25.0, "initial_angle_degrees": 90, "clockwise": false }
 			]
+		},
+		{
+			"mass": 20.0, "orbital_radius": 600.0, "initial_angle_degrees": 180, "clockwise": true
+		},
+		{
+			"mass": 50.0, "orbital_radius": 750.0, "initial_angle_degrees": 270,
+			"moons": [
+				{ "mass": 2.0, "orbital_radius": 40.0, "initial_angle_degrees": 0, "clockwise": true }
+			]
 		}
-		# Removed other planets and moons for stability testing
 	]
 
 	var solar_system_data = OrbitalSystemGenerator.generate_star_system_data(G, star_config, planets_configs)
