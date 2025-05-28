@@ -9,6 +9,7 @@ const OrbitalSystemGenerator = preload("res://orbital_system_generator.gd")
 
 var bodies = []
 @export var G = 10000.0 # Reduced G to slow down the simulation
+var star_node: Node2D = null # To store a reference to the star
 
 func _ready():
 	randomize() # For random initial angles if not specified
@@ -43,7 +44,9 @@ func _ready():
 
 	# Spawn the star
 	if solar_system_data.has("star") and not solar_system_data.star.is_empty():
-		_spawn_body(solar_system_data.star)
+		var spawned_star = _spawn_body(solar_system_data.star)
+		if spawned_star and spawned_star.get("type") == "star_node_ref": # Check for our custom return
+			star_node = spawned_star.node
 
 	# Spawn planets and their moons
 	if solar_system_data.has("planets"):
@@ -57,6 +60,12 @@ func _ready():
 
 func _physics_process(delta):
 	apply_gravity(delta)
+
+	# Update Player position to follow the star
+	if star_node and is_instance_valid(star_node):
+		var player_node = get_parent().get_node_or_null("Player")
+		if player_node and is_instance_valid(player_node):
+			player_node.global_position = star_node.global_position
 
 func apply_gravity(delta):
 	for i in range(bodies.size()):
@@ -97,7 +106,7 @@ func _spawn_body(body_data: Dictionary):
 		new_body.name = "MoonDynamic"
 	else:
 		printerr("Unknown body type to spawn: ", body_type)
-		return
+		return null # Return null if spawning failed
 
 	# Common setup for all bodies
 	# Ensure the script instance is valid before setting properties if script is set dynamically
@@ -131,7 +140,11 @@ func _spawn_body(body_data: Dictionary):
 		get_parent().call_deferred("add_child", new_body)
 	else:
 		printerr("SpaceManager has no parent, cannot add spawned body to scene tree.")
-		return # Cannot proceed without a parent
+		return null # Cannot proceed without a parent
 
 	# Add to the list for physics simulation
 	bodies.append(new_body)
+
+	if body_type == "star":
+		return {"type": "star_node_ref", "node": new_body} # Return a reference to the star
+	return new_body # For other types, or if not star
