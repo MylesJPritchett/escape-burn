@@ -1,6 +1,5 @@
-[gd_scene load_steps=3 format=3 uid="uid://b67o8rwlfk0s3"]
+[gd_scene load_steps=2 format=3 uid="uid://b67o8rwlfk0s3"]
 
-[ext_resource type="Texture2D" uid="uid://cqdfiwmrfogga" path="res://background.jpg" id="2_0xm2m"]
 [ext_resource type="Script" uid="uid://wnoi72sg1k6q" path="res://space_manager.gd" id="2_h2yge"]
 
 [node name="Main" type="Node2D"]
@@ -14,22 +13,3 @@ zoom = Vector2(0.3, 0.3)
 [node name="SpaceManager" type="Node2D" parent="."]
 position = Vector2(571, 324)
 script = ExtResource("2_h2yge")
-
-[node name="RestartButton" type="Button" parent="."]
-layout_mode = 1
-anchor_left = 1.0
-anchor_top = 0.0
-anchor_right = 1.0
-anchor_bottom = 0.0
-offset_left = -110.0
-offset_top = 10.0
-offset_right = -10.0
-offset_bottom = 40.0
-text = "Restart"
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-visible = false
-z_index = -100
-position = Vector2(657, 321.5)
-scale = Vector2(13.5117, 15.1131)
-texture = ExtResource("2_0xm2m")
