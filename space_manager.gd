@@ -11,9 +11,15 @@ var bodies = []
 @export var G = 10000.0 # Reduced G to slow down the simulation
 var star_node: Node2D = null # To store a reference to the star
 
-func _ready():
-	randomize() # For random initial angles if not specified
+func _clear_existing_system():
+	for body in bodies:
+		if is_instance_valid(body):
+			body.queue_free()
+	bodies.clear()
+	star_node = null # Reset the reference to the star node
 
+func _generate_and_spawn_system():
+	# Note: randomize() should be called by the caller (_ready or _on_restart_button_pressed)
 	var star_config = {
 		"mass": randf_range(800.0, 1200.0), # Randomized star mass
 		"position": Vector2.ZERO, # Center the star at SpaceManager's origin
@@ -62,9 +68,9 @@ func _ready():
 
 	# Spawn the star
 	if solar_system_data.has("star") and not solar_system_data.star.is_empty():
-		var spawned_star = _spawn_body(solar_system_data.star)
-		if spawned_star and spawned_star.get("type") == "star_node_ref": # Check for our custom return
-			star_node = spawned_star.node
+		var spawned_star_info = _spawn_body(solar_system_data.star)
+		if spawned_star_info and spawned_star_info.get("type") == "star_node_ref": # Check for our custom return
+			star_node = spawned_star_info.node
 
 	# Spawn planets and their moons
 	if solar_system_data.has("planets"):
@@ -75,6 +81,15 @@ func _ready():
 					_spawn_body(moon_data)
 	
 	print("Dynamically spawned bodies in simulation: ", bodies.size())
+
+func _ready():
+	randomize() # Ensure the first run is random and different if game restarts quickly
+	_generate_and_spawn_system()
+
+func _on_restart_button_pressed():
+	_clear_existing_system()
+	randomize() # Ensure the new system is different from the previous one
+	_generate_and_spawn_system()
 
 func _physics_process(delta):
 	apply_gravity(delta)

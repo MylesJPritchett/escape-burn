@@ -14,3 +14,12 @@ zoom = Vector2(0.3, 0.3)
 [node name="SpaceManager" type="Node2D" parent="."]
 position = Vector2(571, 324)
 script = ExtResource("2_h2yge")
+
+[node name="RestartButton" type="Button" parent="."]
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 110.0
+offset_bottom = 40.0
+text = "Restart"
+
+[connection signal="pressed" from="RestartButton" to="SpaceManager" method="_on_restart_button_pressed"]
