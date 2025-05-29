@@ -72,6 +72,10 @@ func _generate_and_spawn_system():
 
 	var solar_system_data = OrbitalSystemGenerator.generate_star_system_data(G, star_config, planets_configs)
 
+	# Clear previous progression path before generating new one
+	progression_path_bodies.clear()
+	var temp_first_moon = null
+	var temp_first_planet = null
 	# Spawn the star
 	if solar_system_data.has("star"):
 		var star_s_data = solar_system_data.star # Use a different var name to avoid conflict
