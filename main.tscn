@@ -1,5 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://b67o8rwlfk0s3"]
+[gd_scene load_steps=3 format=3 uid="uid://b67o8rwlfk0s3"]
 
+[ext_resource type="Texture2D" uid="uid://cqdfiwmrfogga" path="res://background.jpg" id="2_0xm2m"]
 [ext_resource type="Script" uid="uid://wnoi72sg1k6q" path="res://space_manager.gd" id="2_h2yge"]
 
 [node name="Main" type="Node2D"]
@@ -8,7 +9,6 @@
 position = Vector2(571, 324)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
-current = true
 zoom = Vector2(0.3, 0.3)
 
 [node name="SpaceManager" type="Node2D" parent="."]
@@ -22,4 +22,9 @@ offset_right = 110.0
 offset_bottom = 40.0
 text = "Restart"
 
-[connection signal="pressed" from="RestartButton" to="SpaceManager" method="_on_restart_button_pressed"]
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+z_index = -100
+position = Vector2(657, 321.5)
+scale = Vector2(13.5117, 15.1131)
+texture = ExtResource("2_0xm2m")
