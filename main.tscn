@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://b67o8rwlfk0s3"]
+[gd_scene load_steps=3 format=3 uid="uid://b67o8rwlfk0s3"]
 
 [ext_resource type="Script" uid="uid://wnoi72sg1k6q" path="res://space_manager.gd" id="2_h2yge"]
+[ext_resource type="Script" path="res://camera_controller.gd" id="3_cctrl"]
 
 [node name="Main" type="Node2D"]
 
@@ -9,8 +10,11 @@ position = Vector2(571, 324)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 zoom = Vector2(0.3, 0.3)
+script = ExtResource("3_cctrl")
 
 [node name="SpaceManager" type="Node2D" parent="."]
 position = Vector2(571, 324)
 script = ExtResource("2_h2yge")
 G = null
+player_node_path = NodePath("../Player")
+camera_controller_node_path = NodePath("../Player/Camera2D")
