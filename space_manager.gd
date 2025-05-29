@@ -26,43 +26,49 @@ func _generate_and_spawn_system():
 		"velocity": Vector2.ZERO # Star initially stationary
 	}
 
-	var planets_configs = [
-		{
-			"mass": randf_range(25.0, 35.0), 
-			"orbital_radius": randf_range(350.0, 450.0), 
+	var planets_configs = []
+	var num_planets = randi_range(1, 5) # Generate 1 to 5 planets
+	var current_planet_min_radius = 300.0
+	var planet_radius_step = 150.0 # Min distance between planet orbits
+	var planet_radius_range = 100.0 # Variation in orbital radius
+
+	for i in range(num_planets):
+		var planet_mass = randf_range(10.0, 60.0)
+		var planet_orbital_radius = randf_range(current_planet_min_radius, current_planet_min_radius + planet_radius_range)
+		
+		var planet_config = {
+			"mass": planet_mass,
+			"orbital_radius": planet_orbital_radius,
 			"initial_angle_degrees": randf_range(0.0, 360.0),
 			"clockwise": randf() > 0.5,
-			"moons": [
-				{ 
-					"mass": randf_range(0.5, 1.5), 
-					"orbital_radius": randf_range(20.0, 35.0), # Ensure moon radius is much smaller than planet's
-					"initial_angle_degrees": randf_range(0.0, 360.0),
-					"clockwise": randf() > 0.5
-				}
-			]
-		},
-		{
-			"mass": randf_range(15.0, 25.0), 
-			"orbital_radius": randf_range(550.0, 650.0), # Further out
-			"initial_angle_degrees": randf_range(0.0, 360.0),
-			"clockwise": randf() > 0.5
-			# No moons for this planet for variety
-		},
-		{
-			"mass": randf_range(45.0, 55.0), 
-			"orbital_radius": randf_range(700.0, 800.0), # Furthest out
-			"initial_angle_degrees": randf_range(0.0, 360.0),
-			"clockwise": randf() > 0.5,
-			"moons": [
-				{ 
-					"mass": randf_range(1.5, 2.5), 
-					"orbital_radius": randf_range(30.0, 50.0), 
-					"initial_angle_degrees": randf_range(0.0, 360.0),
-					"clockwise": randf() > 0.5
-				}
-			]
+			"moons": []
 		}
-	]
+		
+		current_planet_min_radius = planet_orbital_radius + planet_radius_step # Ensure next planet is further out
+
+		var num_moons = randi_range(0, 3) # 0 to 3 moons per planet
+		var current_moon_min_radius = 20.0
+		var moon_radius_step = 15.0 # Min distance between moon orbits
+		var moon_radius_range = 10.0 # Variation in orbital radius
+		
+		if num_moons > 0:
+			var moons_array = []
+			for j in range(num_moons):
+				var moon_mass = randf_range(0.1, 5.0)
+				# Ensure moon orbital radius is smaller than planet's visual radius (approx) and reasonable
+				var moon_orbital_radius = clamp(randf_range(current_moon_min_radius, current_moon_min_radius + moon_radius_range), 10.0, planet_orbital_radius * 0.3)
+
+				var moon_config = {
+					"mass": moon_mass,
+					"orbital_radius": moon_orbital_radius,
+					"initial_angle_degrees": randf_range(0.0, 360.0),
+					"clockwise": randf() > 0.5
+				}
+				moons_array.append(moon_config)
+				current_moon_min_radius = moon_orbital_radius + moon_radius_step
+			planet_config["moons"] = moons_array
+			
+		planets_configs.append(planet_config)
 
 	var solar_system_data = OrbitalSystemGenerator.generate_star_system_data(G, star_config, planets_configs)
 
