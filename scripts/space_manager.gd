@@ -8,6 +8,7 @@ const StarTexture = preload("res://resources/the-sun.webp")
 const OrbitalSystemGenerator = preload("res://scripts/orbital_system_generator.gd")
 
 var bodies = []
+var progression_path_bodies = [] # Stores the ordered list of bodies for player progression
 @export var G = 10000.0 # Reduced G to slow down the simulation
 var star_node: Node2D = null # To store a reference to the star
 
@@ -17,6 +18,7 @@ func _clear_existing_system():
 			body.queue_free()
 	bodies.clear()
 	star_node = null # Reset the reference to the star node
+	progression_path_bodies.clear() # Also clear progression path
 
 func _generate_and_spawn_system():
 	# Note: randomize() should be called by the caller (_ready or _on_restart_button_pressed)
@@ -74,8 +76,10 @@ func _generate_and_spawn_system():
 
 	# Clear previous progression path before generating new one
 	progression_path_bodies.clear()
-	var temp_first_moon = null
-	var temp_first_planet = null
+	var first_moon_node = null
+	var parent_planet_of_first_moon_node = null
+	var actual_first_planet_node = null
+	
 	# Spawn the star
 	if solar_system_data.has("star"):
 		var star_s_data = solar_system_data.star # Use a different var name to avoid conflict
@@ -90,6 +94,9 @@ func _generate_and_spawn_system():
 		for planet_data in solar_system_data.planets:
 			var planet_node = _spawn_body(planet_data) # _spawn_body returns the node instance
 			
+			if is_instance_valid(planet_node) and actual_first_planet_node == null:
+				actual_first_planet_node = planet_node
+			
 			if is_instance_valid(planet_node) and planet_data.get("is_orbiting", false):
 				planet_node.is_kinematic_orbit = true
 				planet_node.orbit_center_node = star_node # Planet orbits the star
@@ -101,6 +108,11 @@ func _generate_and_spawn_system():
 			if is_instance_valid(planet_node) and planet_data.has("moons"):
 				for moon_data in planet_data.moons:
 					var moon_node = _spawn_body(moon_data) # _spawn_body returns the node instance
+					
+					if is_instance_valid(moon_node) and first_moon_node == null:
+						first_moon_node = moon_node
+						parent_planet_of_first_moon_node = planet_node # This planet is its parent
+						
 					if is_instance_valid(moon_node) and moon_data.get("is_orbiting", false):
 						moon_node.is_kinematic_orbit = true
 						moon_node.orbit_center_node = planet_node # Moon orbits the planet
@@ -108,8 +120,40 @@ func _generate_and_spawn_system():
 						moon_node.kinematic_angular_speed = moon_data.angular_speed
 						moon_node.kinematic_current_angle_rad = moon_data.initial_angle_radians
 						moon_node.kinematic_orbit_clockwise = moon_data.clockwise_orbit
+
+	# Populate the progression path
+	if is_instance_valid(first_moon_node):
+		progression_path_bodies.append(first_moon_node)
+		if is_instance_valid(parent_planet_of_first_moon_node):
+			progression_path_bodies.append(parent_planet_of_first_moon_node)
+		else:
+			printerr("SpaceManager: First moon found but its parent planet node is not valid.")
+		if is_instance_valid(star_node):
+			progression_path_bodies.append(star_node)
+		else:
+			printerr("SpaceManager: Star node is not valid for progression path with a moon.")
+	elif is_instance_valid(actual_first_planet_node): # No moons, but at least one planet
+		progression_path_bodies.append(actual_first_planet_node)
+		if is_instance_valid(star_node):
+			progression_path_bodies.append(star_node)
+		else:
+			printerr("SpaceManager: Star node is not valid for progression path with a planet.")
+	elif is_instance_valid(star_node): # Only a star
+		progression_path_bodies.append(star_node)
+	else: # No bodies to add to progression path
+		print("SpaceManager: No bodies available for progression path.")
 	
 	print("Dynamically spawned bodies in simulation: ", bodies.size())
+	if progression_path_bodies.size() > 0:
+		var path_names = []
+		for body_node in progression_path_bodies:
+			if is_instance_valid(body_node):
+				path_names.append(body_node.name)
+			else:
+				path_names.append("INVALID_NODE")
+		print("Progression path: ", path_names)
+	else:
+		print("Progression path is empty.")
 
 func _ready():
 	randomize() # Ensure the first run is random and different if game restarts quickly
