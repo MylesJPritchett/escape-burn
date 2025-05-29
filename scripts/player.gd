@@ -1,23 +1,10 @@
-extends Node2D
+extends RigidBody2D
 
 
-const FORWARD_ACCELERATION = 1000000 #pixels/sec/sec
-const SIDE_AND_BACK_ACCELERATION = 500000 #pixels/sec/sec
-const MAX_SPEED = 20000 #pixels/sec
+const FORWARD_ACCELERATION = 10000 #pixels/sec/sec
+const SIDE_AND_BACK_ACCELERATION = 5000 #pixels/sec/sec
+const MAX_SPEED = 200 #pixels/sec
 const ROTATION_SPEED = 5 #lerp between current and mouse
-
-
-var bullet_scene = load("res://bullet.tscn")
-var time_to_next_shot = 0
-
-
-@onready var end_of_gun = $end_of_gun
-
-
-func _ready():
-	time_to_next_shot = 0
-	
-func _process(delta):
 
 
 func _physics_process(delta):
