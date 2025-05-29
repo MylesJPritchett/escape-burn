@@ -13,3 +13,4 @@ zoom = Vector2(0.3, 0.3)
 [node name="SpaceManager" type="Node2D" parent="."]
 position = Vector2(571, 324)
 script = ExtResource("2_h2yge")
+G = null
