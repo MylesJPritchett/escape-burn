@@ -29,13 +29,18 @@ static func _generate_moons_data_for_parent(
 		var moon_data: Dictionary = {}
 		moon_data["type"] = "moon"
 		moon_data["mass"] = moon_mass
+		moon_data["is_orbiting"] = true
+		moon_data["orbital_radius"] = orbital_radius # Already in config, but good to have explicitly
+		moon_data["initial_angle_radians"] = initial_angle_radians
+		moon_data["clockwise_orbit"] = clockwise
 
 		# Calculate position relative to the parent
 		var relative_pos = Vector2(orbital_radius, 0).rotated(initial_angle_radians)
 		moon_data["position"] = parent_position + relative_pos
 
-		# Calculate velocity for circular orbit around the parent
+		# Calculate velocity for circular orbit around the parent (for initial trail & consistency)
 		var speed: float = calculate_circular_orbit_speed(G, parent_mass, orbital_radius)
+		moon_data["angular_speed"] = speed / orbital_radius if orbital_radius > 0.0 else 0.0
 		var relative_velocity_direction: Vector2
 		if clockwise:
 			relative_velocity_direction = -relative_pos.orthogonal() # Clockwise tangential velocity
@@ -59,6 +64,7 @@ static func generate_star_system_data(G: float, star_config: Dictionary, planets
 	star_data["mass"] = star_config.get("mass", 1000.0) # Default mass if not specified
 	star_data["position"] = star_config.get("position", Vector2.ZERO)
 	star_data["velocity"] = star_config.get("velocity", Vector2.ZERO)
+	star_data["is_orbiting"] = false # Star does not orbit kinematically
 	system_data["star"] = star_data
 
 	var planets_data_array: Array = []
@@ -73,13 +79,18 @@ static func generate_star_system_data(G: float, star_config: Dictionary, planets
 		var planet_data: Dictionary = {}
 		planet_data["type"] = "planet"
 		planet_data["mass"] = planet_mass
+		planet_data["is_orbiting"] = true
+		planet_data["orbital_radius"] = orbital_radius # Already in config, but good to have explicitly
+		planet_data["initial_angle_radians"] = initial_angle_radians
+		planet_data["clockwise_orbit"] = clockwise
 
 		# Calculate position relative to the star (which is at star_data.position)
 		var relative_pos = Vector2(orbital_radius, 0).rotated(initial_angle_radians)
 		planet_data["position"] = star_data.position + relative_pos
 
-		# Calculate velocity for circular orbit around the star
+		# Calculate velocity for circular orbit around the star (for initial trail & consistency)
 		var speed: float = calculate_circular_orbit_speed(G, star_data.mass, orbital_radius)
+		planet_data["angular_speed"] = speed / orbital_radius if orbital_radius > 0.0 else 0.0
 		var relative_velocity_direction: Vector2
 		if clockwise:
 			relative_velocity_direction = -relative_pos.orthogonal() # Clockwise tangential velocity

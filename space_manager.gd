@@ -67,18 +67,37 @@ func _generate_and_spawn_system():
 	var solar_system_data = OrbitalSystemGenerator.generate_star_system_data(G, star_config, planets_configs)
 
 	# Spawn the star
-	if solar_system_data.has("star") and not solar_system_data.star.is_empty():
-		var spawned_star_info = _spawn_body(solar_system_data.star)
-		if spawned_star_info and spawned_star_info.get("type") == "star_node_ref": # Check for our custom return
+	if solar_system_data.has("star"):
+		var star_s_data = solar_system_data.star # Use a different var name to avoid conflict
+		var spawned_star_info = _spawn_body(star_s_data)
+		if spawned_star_info and spawned_star_info.get("type") == "star_node_ref":
 			star_node = spawned_star_info.node
+			if is_instance_valid(star_node) and star_s_data.has("is_orbiting"): # Check if key exists
+				star_node.is_kinematic_orbit = star_s_data.is_orbiting # Should be false for star
 
 	# Spawn planets and their moons
 	if solar_system_data.has("planets"):
 		for planet_data in solar_system_data.planets:
-			_spawn_body(planet_data)
-			if planet_data.has("moons"):
+			var planet_node = _spawn_body(planet_data) # _spawn_body returns the node instance
+			
+			if is_instance_valid(planet_node) and planet_data.get("is_orbiting", false):
+				planet_node.is_kinematic_orbit = true
+				planet_node.orbit_center_node = star_node # Planet orbits the star
+				planet_node.kinematic_orbital_radius = planet_data.orbital_radius
+				planet_node.kinematic_angular_speed = planet_data.angular_speed
+				planet_node.kinematic_current_angle_rad = planet_data.initial_angle_radians
+				planet_node.kinematic_orbit_clockwise = planet_data.clockwise_orbit
+			
+			if is_instance_valid(planet_node) and planet_data.has("moons"):
 				for moon_data in planet_data.moons:
-					_spawn_body(moon_data)
+					var moon_node = _spawn_body(moon_data) # _spawn_body returns the node instance
+					if is_instance_valid(moon_node) and moon_data.get("is_orbiting", false):
+						moon_node.is_kinematic_orbit = true
+						moon_node.orbit_center_node = planet_node # Moon orbits the planet
+						moon_node.kinematic_orbital_radius = moon_data.orbital_radius
+						moon_node.kinematic_angular_speed = moon_data.angular_speed
+						moon_node.kinematic_current_angle_rad = moon_data.initial_angle_radians
+						moon_node.kinematic_orbit_clockwise = moon_data.clockwise_orbit
 	
 	print("Dynamically spawned bodies in simulation: ", bodies.size())
 
@@ -112,11 +131,15 @@ func apply_gravity(delta):
 				continue
 			
 			var force_mag = G * body_a.mass * body_b.mass / (distance * distance)
-			var force = dir.normalized() * force_mag
+			var force = dir.normalized() * force_mag # Force is calculated
 			
-			# Update velocities
-			body_a.velocity += force / body_a.mass * delta
-			body_b.velocity -= force / body_b.mass * delta  # Newton's third law
+			# VELOCITY UPDATES REMOVED for celestial bodies.
+			# They now move kinematically.
+			# body_a.velocity += force / body_a.mass * delta
+			# body_b.velocity -= force / body_b.mass * delta
+			
+			# If other, non-celestial objects were added that ARE affected by gravity,
+			# this is where you'd apply 'force' to them.
 
 func _spawn_body(body_data: Dictionary):
 	var new_body # Will hold the Node2D instance
