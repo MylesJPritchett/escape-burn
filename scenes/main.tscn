@@ -19,10 +19,11 @@ node_a = NodePath("../Player")
 node_b = NodePath("../RigidBody2D")
 
 [node name="RigidBody2D" type="RigidBody2D" parent="."]
-mass = 0.001
+mass = 1.0
 gravity_scale = 0.0
 
 [node name="Camera2D" type="Camera2D" parent="RigidBody2D"]
-zoom = Vector2(0.3, 0.3)
+zoom = Vector2(2, 2)
 position_smoothing_speed = 500.0
+editor_draw_screen = false
 script = ExtResource("3_sugp2")
