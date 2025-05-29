@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://dg3dmslnaggqv"]
+
+[ext_resource type="Script" uid="uid://benbkcg77622x" path="res://body.gd" id="1_rjvio"]
+[ext_resource type="Texture2D" uid="uid://bgsj386trq51p" path="res://Luna_Mo_n.webp" id="2_rjvio"]
+
+[node name="Planet" type="Node2D"]
+script = ExtResource("1_rjvio")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.03, 0.03)
+texture = ExtResource("2_rjvio")
