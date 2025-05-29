@@ -3,7 +3,7 @@ extends Camera2D
 @export var default_zoom_level: float = 1.0
 @export var zoom_lerp_speed: float = 2.0 # How fast the zoom changes
 
-private var target_zoom_vector: Vector2
+var target_zoom_vector: Vector2
 
 func _ready():
 	target_zoom_vector = Vector2(default_zoom_level, default_zoom_level)

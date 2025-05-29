@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bgsj386trq51p"
-path="res://.godot/imported/Luna_Mo_n.webp-a9e0a664cc586ec3669c6d50d008d885.ctex"
+uid="uid://0mg4l851bc1l"
+path="res://.godot/imported/Luna_Mo_n.webp-62e668453607337b2be71208ea84c394.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Luna_Mo_n.webp"
-dest_files=["res://.godot/imported/Luna_Mo_n.webp-a9e0a664cc586ec3669c6d50d008d885.ctex"]
+source_file="res://resources/Luna_Mo_n.webp"
+dest_files=["res://.godot/imported/Luna_Mo_n.webp-62e668453607337b2be71208ea84c394.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cqdfiwmrfogga"
-path="res://.godot/imported/background.jpg-79b88fb6fb9ac2ea3dfbdde6ce8e779f.ctex"
+uid="uid://bs6y6tjctlbw4"
+path="res://.godot/imported/the-sun.webp-6dbda3a4de4f1c06cfc5fa458b572969.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://background.jpg"
-dest_files=["res://.godot/imported/background.jpg-79b88fb6fb9ac2ea3dfbdde6ce8e779f.ctex"]
+source_file="res://resources/the-sun.webp"
+dest_files=["res://.godot/imported/the-sun.webp-6dbda3a4de4f1c06cfc5fa458b572969.ctex"]
 
 [params]
 

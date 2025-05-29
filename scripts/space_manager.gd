@@ -1,11 +1,11 @@
 # Global space manager node
 extends Node2D
 
-const BodyScript = preload("res://body.gd")
-const PlanetScene = preload("res://planet.tscn")
-const MoonScene = preload("res://moon.tscn")
-const StarTexture = preload("res://the-sun.webp")
-const OrbitalSystemGenerator = preload("res://orbital_system_generator.gd")
+const BodyScript = preload("res://scripts/body.gd")
+const PlanetScene = preload("res://scenes/planet.tscn")
+const MoonScene = preload("res://scenes/moon.tscn")
+const StarTexture = preload("res://resources/the-sun.webp")
+const OrbitalSystemGenerator = preload("res://scripts/orbital_system_generator.gd")
 
 var bodies = []
 @export var G = 10000.0 # Reduced G to slow down the simulation
