@@ -15,27 +15,45 @@ func _ready():
 	randomize() # For random initial angles if not specified
 
 	var star_config = {
-		"mass": 1000.0,
-		# Position the star at the center of where SpaceManager is (usually Main's origin if SpaceManager is at 0,0)
-		# Or, if you want it screen-centered and SpaceManager is a child of Main (at 0,0):
-		"position": Vector2.ZERO # Center the star at SpaceManager's origin
-		# "velocity": Vector2.ZERO # Optional: if the whole system should have an initial drift
+		"mass": randf_range(800.0, 1200.0), # Randomized star mass
+		"position": Vector2.ZERO, # Center the star at SpaceManager's origin
+		"velocity": Vector2.ZERO # Star initially stationary
 	}
 
 	var planets_configs = [
 		{
-			"mass": 30.0, "orbital_radius": 400.0, "initial_angle_degrees": 0, # Increased planet's orbital radius
+			"mass": randf_range(25.0, 35.0), 
+			"orbital_radius": randf_range(350.0, 450.0), 
+			"initial_angle_degrees": randf_range(0.0, 360.0),
+			"clockwise": randf() > 0.5,
 			"moons": [
-				{ "mass": 1.0, "orbital_radius": 25.0, "initial_angle_degrees": 90, "clockwise": false }
+				{ 
+					"mass": randf_range(0.5, 1.5), 
+					"orbital_radius": randf_range(20.0, 35.0), # Ensure moon radius is much smaller than planet's
+					"initial_angle_degrees": randf_range(0.0, 360.0),
+					"clockwise": randf() > 0.5
+				}
 			]
 		},
 		{
-			"mass": 20.0, "orbital_radius": 600.0, "initial_angle_degrees": 180, "clockwise": true
+			"mass": randf_range(15.0, 25.0), 
+			"orbital_radius": randf_range(550.0, 650.0), # Further out
+			"initial_angle_degrees": randf_range(0.0, 360.0),
+			"clockwise": randf() > 0.5
+			# No moons for this planet for variety
 		},
 		{
-			"mass": 50.0, "orbital_radius": 750.0, "initial_angle_degrees": 270,
+			"mass": randf_range(45.0, 55.0), 
+			"orbital_radius": randf_range(700.0, 800.0), # Furthest out
+			"initial_angle_degrees": randf_range(0.0, 360.0),
+			"clockwise": randf() > 0.5,
 			"moons": [
-				{ "mass": 2.0, "orbital_radius": 40.0, "initial_angle_degrees": 0, "clockwise": true }
+				{ 
+					"mass": randf_range(1.5, 2.5), 
+					"orbital_radius": randf_range(30.0, 50.0), 
+					"initial_angle_degrees": randf_range(0.0, 360.0),
+					"clockwise": randf() > 0.5
+				}
 			]
 		}
 	]
