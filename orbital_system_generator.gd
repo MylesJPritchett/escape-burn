@@ -30,6 +30,10 @@ static func _generate_moons_data_for_parent(
 		moon_data["type"] = "moon"
 		moon_data["mass"] = moon_mass
 		moon_data["is_orbiting"] = true
+		# Progression related data
+		moon_data["body_type_name"] = "moon"
+		moon_data["soi_radius"] = moon_mass * 50.0 + orbital_radius * 2.0 # Example formula
+		moon_data["camera_zoom_target"] = 0.2 + moon_mass * 0.01 # Example formula
 		moon_data["orbital_radius"] = orbital_radius # Already in config, but good to have explicitly
 		moon_data["initial_angle_radians"] = initial_angle_radians
 		moon_data["clockwise_orbit"] = clockwise
@@ -63,6 +67,10 @@ static func generate_star_system_data(G: float, star_config: Dictionary, planets
 	star_data["type"] = "star"
 	star_data["mass"] = star_config.get("mass", 1000.0) # Default mass if not specified
 	star_data["position"] = star_config.get("position", Vector2.ZERO)
+	# Progression related data
+	star_data["body_type_name"] = "star"
+	star_data["soi_radius"] = star_data.mass * 200.0 # Example formula
+	star_data["camera_zoom_target"] = 5.0 + star_data.mass * 0.01 # Example formula
 	star_data["velocity"] = star_config.get("velocity", Vector2.ZERO)
 	star_data["is_orbiting"] = false # Star does not orbit kinematically
 	system_data["star"] = star_data
@@ -80,6 +88,10 @@ static func generate_star_system_data(G: float, star_config: Dictionary, planets
 		planet_data["type"] = "planet"
 		planet_data["mass"] = planet_mass
 		planet_data["is_orbiting"] = true
+		# Progression related data
+		planet_data["body_type_name"] = "planet"
+		planet_data["soi_radius"] = planet_mass * 100.0 + orbital_radius * 1.5 # Example formula
+		planet_data["camera_zoom_target"] = 1.0 + planet_mass * 0.02 # Example formula
 		planet_data["orbital_radius"] = orbital_radius # Already in config, but good to have explicitly
 		planet_data["initial_angle_radians"] = initial_angle_radians
 		planet_data["clockwise_orbit"] = clockwise

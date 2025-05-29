@@ -1,6 +1,11 @@
 # Attached to each gravitating body
 extends Node2D
 
+## Progression and Camera Properties
+@export var body_type_name: String = "celestial_body" # e.g., "moon", "planet", "star". Used for identification.
+@export var soi_radius: float = 1000.0 # Sphere of Influence radius for progression
+@export var camera_zoom_target: float = 1.0 # Suggested camera zoom when this body is the focus
+
 @export var mass = 1.0
 var velocity = Vector2.ZERO
 
