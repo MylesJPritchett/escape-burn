@@ -4,8 +4,8 @@ extends RigidBody2D
 var space_manager: Node
 
 # These constants define acceleration. Force applied will be mass * acceleration.
-const FORWARD_ACCELERATION = 10000 #pixels/sec^2 
-const SIDE_AND_BACK_ACCELERATION = 5000 #pixels/sec^2
+const FORWARD_ACCELERATION = 100 #pixels/sec^2 
+const SIDE_AND_BACK_ACCELERATION = 25 #pixels/sec^2
 const MAX_SPEED = 200 #pixels/sec
 const ROTATION_SPEED = 5 #rad/sec for rotation lerp speed
 

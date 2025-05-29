@@ -167,11 +167,6 @@ func _on_restart_button_pressed():
 func _physics_process(delta):
 	apply_gravity(delta)
 
-	# Update Player position to follow the star
-	if star_node and is_instance_valid(star_node):
-		var player_node = get_parent().get_node_or_null("Player")
-		if player_node and is_instance_valid(player_node):
-			player_node.global_position = star_node.global_position
 
 func apply_gravity(delta):
 	for i in range(bodies.size()):
@@ -194,6 +189,7 @@ func apply_gravity(delta):
 			
 			# If other, non-celestial objects were added that ARE affected by gravity,
 			# this is where you'd apply 'force' to them.
+			
 
 func _spawn_body(body_data: Dictionary):
 	var new_body # Will hold the Node2D instance
